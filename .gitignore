@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+.next/
+out/
+build/
+dist/
+
+# Environment variables — NEVER commit these
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# Secrets and credentials
+*.pem
+*.key
+*.cert
+*.p12
+secrets/
+
+# Client data — NEVER commit company data
+data/
+uploads/
+documents/
+*.pdf
+*.docx
+*.xlsx
+*.csv
+client-data/
+company-data/
+
+# Logs — may contain client data
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# Testing artifacts
+coverage/
+.nyc_output/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Supabase local
+.supabase/
+
+# Vercel
+.vercel
