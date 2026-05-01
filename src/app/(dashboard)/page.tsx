@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/db/client";
+import { createServerSupabaseClient } from "@/lib/db/server";
 
 export default async function DashboardPage() {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

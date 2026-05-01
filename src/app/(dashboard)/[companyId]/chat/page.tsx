@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/db/client";
+import { createServerSupabaseClient } from "@/lib/db/server";
 import { ChatInterface } from "@/components/chat/ChatInterface";
 import { ArtifactPanel } from "@/components/artifacts/ArtifactPanel";
 import type { Artifact, UserRole } from "@/types";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default async function ChatPage({ params, searchParams }: Props) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

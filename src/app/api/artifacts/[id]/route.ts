@@ -2,7 +2,7 @@ import {
   createServerSupabaseClient,
   getAuthenticatedUser,
   verifyCompanyAccess,
-} from "@/lib/db/client";
+} from "@/lib/db/server";
 import { getArtifact } from "@/lib/db/queries";
 import {
   unauthorizedResponse,
@@ -21,7 +21,7 @@ export async function GET(request: Request, { params }: Props) {
 
   if (!companyId) return badRequestResponse("company_id required");
 
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {

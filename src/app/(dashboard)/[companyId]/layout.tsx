@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/db/client";
-import { verifyCompanyAccess } from "@/lib/db/client";
+import { createServerSupabaseClient } from "@/lib/db/server";
+import { verifyCompanyAccess } from "@/lib/db/server";
 
 interface Props {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default async function CompanyLayout({ children, params }: Props) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

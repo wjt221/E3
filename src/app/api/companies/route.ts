@@ -3,7 +3,7 @@ import {
   createServerSupabaseClient,
   getAuthenticatedUser,
   getUserProfile,
-} from "@/lib/db/client";
+} from "@/lib/db/server";
 import { writeAuditLog } from "@/lib/db/queries";
 import {
   unauthorizedResponse,
@@ -14,7 +14,7 @@ import {
 import type { UserRole } from "@/types";
 
 export async function GET(request: Request) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {
@@ -44,7 +44,7 @@ const CreateCompanySchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {

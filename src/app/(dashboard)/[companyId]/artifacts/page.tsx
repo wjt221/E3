@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/db/client";
+import { createServerSupabaseClient } from "@/lib/db/server";
 import { listArtifacts } from "@/lib/db/queries";
 import type { Artifact, ArtifactType } from "@/types";
 
@@ -22,7 +22,7 @@ const ARTIFACT_TYPE_LABELS: Record<ArtifactType, string> = {
 };
 
 export default async function ArtifactsPage({ params }: Props) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 

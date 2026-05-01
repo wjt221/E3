@@ -4,7 +4,7 @@ import {
   getAuthenticatedUser,
   getUserProfile,
   verifyCompanyAccess,
-} from "@/lib/db/client";
+} from "@/lib/db/server";
 import { listArtifacts, upsertArtifact, writeAuditLog } from "@/lib/db/queries";
 import {
   unauthorizedResponse,
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
   if (!companyId) return badRequestResponse("company_id required");
 
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {
@@ -59,7 +59,7 @@ const CreateArtifactSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {

@@ -4,7 +4,7 @@ import {
   getAuthenticatedUser,
   getUserProfile,
   verifyCompanyAccess,
-} from "@/lib/db/client";
+} from "@/lib/db/server";
 import {
   getOrCreateConversation,
   getConversationMessages,
@@ -39,7 +39,7 @@ const ChatRequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   // 1. Authenticate
   let user;

@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { createServerSupabaseClient } from "@/lib/db/client";
+import { createServerSupabaseClient } from "@/lib/db/server";
 
 interface Props {
   params: { companyId: string };
 }
 
 export default async function PlanPage({ params }: Props) {
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 

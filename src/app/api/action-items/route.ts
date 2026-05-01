@@ -3,7 +3,7 @@ import {
   createServerSupabaseClient,
   getAuthenticatedUser,
   verifyCompanyAccess,
-} from "@/lib/db/client";
+} from "@/lib/db/server";
 import { listActionItems } from "@/lib/db/queries";
 import {
   unauthorizedResponse,
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   if (!companyId) return badRequestResponse("company_id required");
 
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {
@@ -47,7 +47,7 @@ export async function PATCH(request: Request) {
 
   if (!id || !companyId) return badRequestResponse("id and company_id required");
 
-  const supabase = createServerSupabaseClient();
+  const supabase = await createServerSupabaseClient();
 
   let user;
   try {
