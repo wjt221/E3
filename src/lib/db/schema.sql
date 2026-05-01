@@ -224,9 +224,19 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Audit logs are append-only — no updates or deletes
-CREATE RULE audit_logs_no_update AS ON UPDATE TO audit_logs DO INSTEAD NOTHING;
-CREATE RULE audit_logs_no_delete AS ON DELETE TO audit_logs DO INSTEAD NOTHING;
+-- Audit logs are append-only — enforced via trigger (RLS also has no UPDATE/DELETE policies)
+CREATE OR REPLACE FUNCTION audit_logs_immutable()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE EXCEPTION 'audit_logs are immutable';
+END;
+$$;
+
+CREATE TRIGGER audit_logs_no_update
+  BEFORE UPDATE ON audit_logs FOR EACH ROW EXECUTE FUNCTION audit_logs_immutable();
+
+CREATE TRIGGER audit_logs_no_delete
+  BEFORE DELETE ON audit_logs FOR EACH ROW EXECUTE FUNCTION audit_logs_immutable();
 
 -- =============================================================================
 -- INDEXES
