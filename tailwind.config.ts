@@ -9,9 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // E3 brand palette — premium, trust-inspiring
-        e3: {
-          50: "#f0f4ff",
+        brand: {
+          50:  "#f0f4ff",
           100: "#dce7ff",
           200: "#b9d0ff",
           300: "#84aeff",
@@ -23,57 +22,58 @@ const config: Config = {
           900: "#00208b",
           950: "#001260",
         },
-        slate: {
-          850: "#172033",
-          950: "#0a0f1e",
+        surface: {
+          0:  "rgb(10 14 26)",
+          1:  "rgb(14 20 38)",
+          2:  "rgb(20 28 52)",
+          3:  "rgb(28 38 68)",
         },
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "Fira Code", "monospace"],
+        mono: ["JetBrains Mono", "Fira Code", "Menlo", "monospace"],
+      },
+      fontSize: {
+        "2xs": ["0.65rem", { lineHeight: "1rem" }],
+      },
+      boxShadow: {
+        "glow-blue":  "0 0 20px rgb(26 86 255 / 0.15), 0 0 40px rgb(26 86 255 / 0.08)",
+        "glow-sm":    "0 0 12px rgb(26 86 255 / 0.12)",
+        "card":       "0 1px 3px rgb(0 0 0 / 0.4), 0 1px 2px rgb(0 0 0 / 0.3)",
+        "card-lg":    "0 4px 24px rgb(0 0 0 / 0.5), 0 1px 4px rgb(0 0 0 / 0.3)",
+        "inset-top":  "inset 0 1px 0 rgb(255 255 255 / 0.04)",
+      },
+      backgroundImage: {
+        "gradient-radial":   "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-brand":    "linear-gradient(135deg, #1a56ff, #4d82ff)",
+        "mesh-dark": `
+          radial-gradient(ellipse 80% 50% at 20% 40%, rgb(26 86 255 / 0.07) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 40% at 80% 60%, rgb(77 130 255 / 0.05) 0%, transparent 60%)
+        `,
       },
       animation: {
-        "fade-in": "fadeIn 0.2s ease-in-out",
-        "slide-up": "slideUp 0.3s ease-out",
-        "pulse-subtle": "pulseSubtle 2s ease-in-out infinite",
+        "fade-in":    "animate-in 0.2s ease-out",
+        "slide-up":   "animate-up 0.25s ease-out",
+        "scale-in":   "animate-scale 0.2s ease-out",
+        "pulse-slow": "pulse 3s ease-in-out infinite",
+        "spin-slow":  "spin 2s linear infinite",
       },
       keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+        "animate-in": {
+          from: { opacity: "0" },
+          to:   { opacity: "1" },
         },
-        slideUp: {
-          "0%": { transform: "translateY(8px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
+        "animate-up": {
+          from: { opacity: "0", transform: "translateY(6px)" },
+          to:   { opacity: "1", transform: "translateY(0)" },
         },
-        pulseSubtle: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
+        "animate-scale": {
+          from: { opacity: "0", transform: "scale(0.96)" },
+          to:   { opacity: "1", transform: "scale(1)" },
         },
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: "none",
-            color: "#e2e8f0",
-            a: { color: "#4d82ff" },
-            strong: { color: "#f1f5f9" },
-            h1: { color: "#f1f5f9" },
-            h2: { color: "#f1f5f9" },
-            h3: { color: "#f1f5f9" },
-            h4: { color: "#f1f5f9" },
-            code: { color: "#84aeff", backgroundColor: "#172033" },
-            "code::before": { content: '""' },
-            "code::after": { content: '""' },
-            blockquote: {
-              borderLeftColor: "#1a56ff",
-              color: "#94a3b8",
-            },
-            hr: { borderColor: "#1e293b" },
-            th: { color: "#f1f5f9" },
-            td: { color: "#e2e8f0" },
-          },
-        },
+      transitionTimingFunction: {
+        spring: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
       },
     },
   },
