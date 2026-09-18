@@ -27,7 +27,7 @@ Compass brings four things together and keeps them in one place over the life of
 
 **Continuous evidence.** Meetings, financials, strategic plans, board materials, decisions, and commitments — captured as they happen, not reconstructed from memory.
 
-Compass runs through Claude and draws on the E3 Google Drive knowledge architecture. You do not need to know how that plumbing works to use it well.
+Compass runs through Claude, drawing on E3's knowledge architecture and the Member's own records. You do not need to know how that plumbing works to use it well.
 
 What matters is what Compass does for you. It helps you remember more than any person can hold in their head, connect a comment from three meetings ago to a number in this month's financials, challenge management's framing, prioritize the few things that matter, prepare properly in ten minutes, recognize patterns across time, resist the pull of the most recent conversation, and reach the relevant E3 knowledge without hunting for it.
 
