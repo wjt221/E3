@@ -2,9 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "builds": [
-    { "src": "E3-Compass-LOP-Playbook.html", "use": "@vercel/static" }
+    { "src": "E3-Compass-LOP-Playbook.html", "use": "@vercel/static" },
+    { "src": "E3 Logo.jpg", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/", "dest": "/E3-Compass-LOP-Playbook.html" }
+    { "src": "/", "dest": "/E3-Compass-LOP-Playbook.html" },
+    { "src": "/E3%20Logo.jpg", "dest": "/E3 Logo.jpg" }
   ]
 }
