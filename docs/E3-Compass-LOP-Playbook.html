@@ -222,9 +222,98 @@
     gap:20px;
     flex-wrap:wrap;
   }
+
+  .architecture{
+    margin:30px 0 12px;
+  }
+  .arch-row{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:28px;
+    padding:22px 0;
+    border-top:1px solid var(--line);
+  }
+  .arch-row:last-child{border-bottom:1px solid var(--line)}
+  .arch-folder{
+    font-weight:800;
+    color:var(--e3);
+    line-height:1.35;
+  }
+  .arch-folder span{
+    display:block;
+    margin-top:4px;
+    color:var(--muted);
+    font-size:13px;
+    font-weight:600;
+  }
+  .arch-files{
+    display:grid;
+    gap:7px;
+  }
+  .arch-file{
+    display:grid;
+    grid-template-columns:minmax(210px,290px) 1fr;
+    gap:16px;
+  }
+  .arch-file code{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.86rem;
+    color:var(--ink);
+    white-space:normal;
+  }
+  .arch-file div:last-child{
+    color:var(--muted);
+    font-size:.93rem;
+  }
+  .source-order{
+    margin:26px 0;
+    padding:0;
+    counter-reset:rank;
+    list-style:none;
+    max-width:760px;
+  }
+  .source-order li{
+    counter-increment:rank;
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid #EEF1F4;
+    margin:0;
+  }
+  .source-order li::before{
+    content:counter(rank);
+    color:var(--e3);
+    font-weight:800;
+  }
+  .ari-example{
+    margin:30px 0;
+    border-top:3px solid var(--e3);
+    padding-top:22px;
+  }
+  .ari-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    margin:24px 0;
+  }
+  .ari-block{
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .ari-block h3{margin:0 0 8px;font-size:1rem}
+  .ari-block p{margin-bottom:8px}
+  .source-note{
+    margin-top:18px;
+    color:var(--muted);
+    font-size:.9rem;
+  }
+
   @media(max-width:700px){
     .page,.topbar-inner{padding-left:20px;padding-right:20px}
-    .toc,.comparison{grid-template-columns:1fr}
+    .toc,.comparison,.ari-grid{grid-template-columns:1fr}
+    .arch-row{grid-template-columns:1fr;gap:10px}
+    .arch-file{grid-template-columns:1fr;gap:4px}
     .step{grid-template-columns:1fr;gap:5px}
     .cover{padding-top:56px}
     .cover-logo{width:132px}
@@ -264,7 +353,9 @@
     <a href="#knowledge"><span class="toc-num">05</span><span>E3 knowledge and Plays</span></a>
     <a href="#outputs"><span class="toc-num">06</span><span>LOP and Member outputs</span></a>
     <a href="#prompts"><span class="toc-num">07</span><span>Useful prompts</span></a>
-    <a href="#discipline"><span class="toc-num">08</span><span>Operating discipline</span></a>
+    <a href="#architecture"><span class="toc-num">08</span><span>What Claude reads</span></a>
+    <a href="#ari"><span class="toc-num">09</span><span>ARI example</span></a>
+    <a href="#discipline"><span class="toc-num">10</span><span>Operating discipline</span></a>
   </nav>
 
   <section id="use">
@@ -407,6 +498,137 @@
       <div class="prompt"><code>Which parts of the three-year plan depend on capabilities the company does not have today?</code><button class="copy">Copy</button></div>
       <div class="prompt"><code>Does the company have the management capacity and integration capability to make acquisitions accretive right now?</code><button class="copy">Copy</button></div>
       <div class="prompt"><code>What is consuming management attention that should be deferred or stopped?</code><button class="copy">Copy</button></div>
+    </div>
+  </section>
+
+
+  <section id="architecture">
+    <h2>What Claude reads</h2>
+    <p class="lead">Compass works from a defined set of files. The answer changes depending on the question, but Claude should always start with the Member's current context before reaching into broader E3 knowledge.</p>
+
+    <ol class="source-order">
+      <li><div><strong>Verified Member evidence</strong><br>Financials, plans, board materials, source documents and meeting records.</div></li>
+      <li><div><strong>Current Member view</strong><br>Company Context, Value Creation Thesis, open decisions, commitments and LOP observations.</div></li>
+      <li><div><strong>Approved E3 knowledge</strong><br>Capability files, approved Plays, tools and templates that fit the issue being analyzed.</div></li>
+      <li><div><strong>Cross-Member learning</strong><br>Patterns and case learning that have been approved for reuse.</div></li>
+      <li><div><strong>Claude reasoning</strong><br>Used to connect the evidence and form hypotheses. Claude should identify when an idea comes from reasoning rather than established E3 IP.</div></li>
+    </ol>
+
+    <div class="architecture">
+      <div class="arch-row">
+        <div class="arch-folder">00_SYSTEM<span>How Compass should reason</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>CLAUDE_INSTRUCTIONS.md</code><div>Standing rules for evidence, priority setting, source authority and Member-facing output.</div></div>
+          <div class="arch-file"><code>LOP_ENGAGEMENT_MODEL.md</code><div>Defines the LOP role, management ownership, cadence and escalation boundaries.</div></div>
+          <div class="arch-file"><code>TAXONOMY.md</code><div>Maps issues to Governance, Management Systems, People, Finance, GTM, Operations, AI and other E3 areas.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">01_E3_CORE_KNOWLEDGE<span>How E3 thinks about the issue</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>GOV_Governance.md</code><div>Used when the issue touches board structure, CEO accountability or decision rights.</div></div>
+          <div class="arch-file"><code>MGT_Management_Systems.md</code><div>Used for priorities, KPIs, cadence, accountability and execution.</div></div>
+          <div class="arch-file"><code>PPL_People_Organizational_Capability.md</code><div>Used for leadership capacity, org design, succession and founder dependency.</div></div>
+          <div class="arch-file"><code>FIN / GTM / OPS / MA / AI ...</code><div>Claude pulls only the functional files that are relevant to the current question.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">02_E3_PLAYS<span>What intervention may fit</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>Founder_Decision_Rights_Reset.md</code><div>Relevant when decisions remain unnecessarily centralized around the founder.</div></div>
+          <div class="arch-file"><code>Leadership_Capability_Assessment.md</code><div>Relevant when the current team may not support the next stage of growth.</div></div>
+          <div class="arch-file"><code>Pricing_Diagnostic.md</code><div>Relevant when margin pressure may be tied to price, mix or discounting.</div></div>
+          <div class="arch-file"><code>M&A_Readiness_Assessment.md</code><div>Relevant before recommending an acquisition program.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">03_E3_TOOLS_AND_TEMPLATES<span>What work product may be needed</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>Enterprise_Value_Creation_Plan.md</code><div>Structures the Member's current priorities and value creation logic.</div></div>
+          <div class="arch-file"><code>KPI_Tree.md</code><div>Used when priorities need measurable drivers and operating metrics.</div></div>
+          <div class="arch-file"><code>Leadership_Assessment.md</code><div>Used when the team needs a more formal capability review.</div></div>
+          <div class="arch-file"><code>Capital_Allocation_Framework.md</code><div>Used when management must choose among competing uses of capital.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">04_E3_QUESTION_BANK<span>What the LOP should ask</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>LOP_Question_Bank.md</code><div>Provides E3 questions across enterprise value, strategy, leadership, finance, GTM, M&A, operations and governance.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">05_MEMBER_COMPANIES<span>The current truth about this Member</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>01_Company_Context.md</code><div>Business model, economics, ownership, people, goals, risks and current initiatives.</div></div>
+          <div class="arch-file"><code>02_Current_Value_Creation_Thesis.md</code><div>Canonical source for current priorities and the logic behind them.</div></div>
+          <div class="arch-file"><code>03_Open_Decisions_and_Commitments.md</code><div>Tracks decisions, owners, due dates, deferrals and completion evidence.</div></div>
+          <div class="arch-file"><code>04_LOP_Observations.md</code><div>LOP judgment and hypotheses that still need validation.</div></div>
+          <div class="arch-file"><code>Meeting_Intelligence/</code><div>Raw Granola notes and transcripts. Preserved as source evidence.</div></div>
+          <div class="arch-file"><code>Reference_Materials/</code><div>Board decks, financials, plans, org charts, assessments and other company documents.</div></div>
+        </div>
+      </div>
+
+      <div class="arch-row">
+        <div class="arch-folder">08_E3_LEARNING<span>What E3 has learned elsewhere</span></div>
+        <div class="arch-files">
+          <div class="arch-file"><code>PATTERN_LIBRARY.md</code><div>Recurring patterns across Members, such as founder dependency or margin deterioration during growth.</div></div>
+          <div class="arch-file"><code>PLAY_LEARNINGS.md</code><div>What worked, what did not and how an E3 Play has evolved.</div></div>
+          <div class="arch-file"><code>CASE_LIBRARY.md</code><div>Anonymized examples that help an LOP recognize similar situations.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <p>For a question such as, “Why is EBITDA flat while revenue is growing?”, Claude should read the Member thesis and recent evidence first, then pull Strategic Finance, Pricing, Operations and GTM knowledge as needed. A leadership question should produce a different file set. Compass should not load the entire library for every answer.</p>
+  </section>
+
+  <section id="ari">
+    <h2>Example: how Compass would use ARI context</h2>
+    <p class="lead">ARI illustrates how company evidence and E3 knowledge work together. The example below uses ARI context already available to E3. It has not been validated against a Dropbox source in this session.</p>
+
+    <div class="ari-example">
+      <div class="ari-grid">
+        <div class="ari-block">
+          <h3>Member context Claude may know</h3>
+          <p><strong>Long-term ambition:</strong> become the most recognized name in technically complex drilling and blasting in the U.S., with a prior goal of $250 million of revenue and $1 billion of enterprise value.</p>
+          <p><strong>Economic guardrail:</strong> avoid risk projects and maintain at least a 20% gross margin.</p>
+          <p><strong>Operating constraint:</strong> operator utilization and productive hours are a major focus, with a 40% to 50% productive-hour goal.</p>
+          <p><strong>Organization:</strong> leadership structure, project management capacity and compliance ownership have been active issues.</p>
+        </div>
+
+        <div class="ari-block">
+          <h3>Files Compass would reference</h3>
+          <p><code>01_Company_Context.md</code> for ARI's business model, goals, leadership structure and economic guardrails.</p>
+          <p><code>02_Current_Value_Creation_Thesis.md</code> for the current three to five priorities.</p>
+          <p><code>Meeting_Intelligence/</code> for recent Granola discussions about operators, EPC customers, risk projects and org design.</p>
+          <p><code>Reference_Materials/</code> for the current plan, financials, org chart and any operational data loaded for ARI.</p>
+        </div>
+      </div>
+
+      <div class="ari-grid">
+        <div class="ari-block">
+          <h3>A question from the LOP</h3>
+          <p>“Where should I push Katie and the team if we want to scale ARI without sacrificing margin or taking on the wrong work?”</p>
+        </div>
+
+        <div class="ari-block">
+          <h3>Additional E3 knowledge Claude may pull</h3>
+          <p><code>OPS_Operations.md</code> for utilization, capacity and operating leverage.</p>
+          <p><code>PPL_People_Organizational_Capability.md</code> for leadership capacity and role design.</p>
+          <p><code>MGT_Management_Systems.md</code> for priority ownership, KPIs and accountability.</p>
+          <p><code>FIN_Strategic_Finance.md</code> for margin discipline and economics by project/customer type.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Likely Compass focus:</strong> determine whether the constraint is demand, operator capacity, project selection, project management leverage or organizational design. The answer should use current ARI evidence to distinguish among those explanations before recommending a Play.
+      </div>
+
+      <p class="source-note">Source note: the ARI facts shown here come from existing E3 context available in this workspace, not from a Dropbox file retrieved in this session. Once the Dropbox materials are available through an accessible source, this section should be replaced with citations to the actual ARI files.</p>
     </div>
   </section>
 
