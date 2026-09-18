@@ -1,0 +1,812 @@
+<title>E3 Compass Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFEDE6;
+    --surface:#F6F5EF;
+    --ink:#1B1E1C;
+    --ink-soft:#54584F;
+    --line:#D7D3C6;
+    --line-strong:#C3BEAE;
+    --pine:#1E3A31;
+    --pine-text:#EEEADE;
+    --brass:#9C7A38;
+    --brass-bright:#B69152;
+    --maxw:44rem;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){
+      --paper:#13160F;
+      --surface:#1B1F17;
+      --ink:#ECE9DC;
+      --ink-soft:#A7AB9C;
+      --line:#2C3126;
+      --line-strong:#3A4032;
+      --pine:#22443A;
+      --pine-text:#EEEADE;
+      --brass:#C6A462;
+      --brass-bright:#D6B674;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#13160F;
+    --surface:#1B1F17;
+    --ink:#ECE9DC;
+    --ink-soft:#A7AB9C;
+    --line:#2C3126;
+    --line-strong:#3A4032;
+    --pine:#22443A;
+    --pine-text:#EEEADE;
+    --brass:#C6A462;
+    --brass-bright:#D6B674;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--brass);color:var(--paper)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:22px}
+
+  /* ---- top bar ---- */
+  header.bar{
+    position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+    background:color-mix(in srgb,var(--paper) 90%,transparent);
+    backdrop-filter:saturate(1.2) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:11px}
+  .mark{
+    font-family:"IBM Plex Mono",monospace;font-weight:500;
+    letter-spacing:.16em;text-transform:uppercase;font-size:12.5px;color:var(--ink);
+    display:flex;align-items:center;gap:.55em;
+  }
+  .mark b{color:var(--brass);font-weight:500}
+  .toggle{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);
+    border-radius:2px;padding:6px 10px;cursor:pointer;
+  }
+  .toggle:hover{color:var(--ink);border-color:var(--brass)}
+  .toggle:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+  /* ---- cover ---- */
+  .cover{padding-block:64px 40px;border-bottom:1px solid var(--line)}
+  .compass{width:60px;height:60px;display:block;margin-bottom:34px}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--brass);margin:0 0 18px;
+  }
+  h1.title{
+    font-family:"Newsreader",Georgia,serif;font-weight:500;
+    font-size:clamp(3rem,11vw,5.2rem);line-height:.94;letter-spacing:-.01em;
+    margin:0;color:var(--ink);text-wrap:balance;
+  }
+  .subtitle{
+    font-family:"Newsreader",Georgia,serif;font-weight:400;font-style:italic;
+    font-size:clamp(1.35rem,4.4vw,1.9rem);color:var(--ink);margin:14px 0 0;line-height:1.15;
+  }
+  .lede{
+    max-width:34rem;color:var(--ink-soft);font-size:1.05rem;margin:26px 0 0;
+  }
+  .meta{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);margin-top:34px;
+    display:flex;flex-wrap:wrap;gap:8px 18px;border-top:1px solid var(--line);padding-top:18px;
+  }
+
+  /* ---- contents ---- */
+  .contents{padding-block:40px;border-bottom:1px solid var(--line)}
+  .contents h2{
+    font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:12px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin:0 0 22px;
+  }
+  .toc{list-style:none;margin:0;padding:0;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:2px 34px;
+    counter-reset:toc;
+  }
+  .toc a{
+    display:flex;gap:14px;align-items:baseline;text-decoration:none;color:var(--ink);
+    padding:7px 0;border-bottom:1px solid var(--line);
+  }
+  .toc a:hover{color:var(--brass)}
+  .toc .n{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);
+    min-width:1.6em;font-variant-numeric:tabular-nums;
+  }
+  .toc .t{font-size:.98rem;line-height:1.3}
+
+  /* ---- body / sections ---- */
+  main{padding-block:20px}
+  section.part{padding-block:52px;border-bottom:1px solid var(--line);scroll-margin-top:64px}
+  section.part:last-of-type{border-bottom:0}
+  .part-head{margin:0 0 30px}
+  .part-num{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass);display:inline-flex;align-items:center;gap:12px;margin:0 0 16px;
+  }
+  .part-num::after{content:"";width:44px;height:1px;background:var(--line-strong)}
+  h2.part-title{
+    font-family:"Newsreader",Georgia,serif;font-weight:500;
+    font-size:clamp(1.9rem,6vw,2.7rem);line-height:1.03;letter-spacing:-.01em;
+    margin:0;color:var(--ink);text-wrap:balance;
+  }
+  h3{
+    font-family:"Newsreader",Georgia,serif;font-weight:600;font-size:1.35rem;
+    line-height:1.2;margin:40px 0 12px;color:var(--ink);
+  }
+  h4{
+    font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:12px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+    margin:30px 0 10px;
+  }
+  p{margin:0 0 16px;max-width:40rem}
+  strong{font-weight:600}
+  em{font-style:italic}
+  a.inline{color:var(--brass);text-underline-offset:3px}
+
+  ul,ol{margin:0 0 18px;padding-left:0;max-width:40rem;list-style:none}
+  li{position:relative;padding-left:26px;margin-bottom:9px}
+  ul li::before{content:"";position:absolute;left:4px;top:.72em;width:7px;height:1px;background:var(--brass)}
+  ol{counter-reset:ol}
+  ol li{counter-increment:ol}
+  ol li::before{
+    content:counter(ol);position:absolute;left:0;top:0;
+    font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);
+    font-variant-numeric:tabular-nums;line-height:1.72;
+  }
+
+  /* ---- pine panel: signature statements ---- */
+  .panel{
+    background:var(--pine);color:var(--pine-text);
+    padding:34px 32px;margin:34px 0;border-radius:1px;
+    position:relative;
+  }
+  .panel::before{
+    content:"";position:absolute;left:0;top:22px;bottom:22px;width:3px;background:var(--brass-bright);
+  }
+  .panel p{
+    font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.4rem,4vw,1.85rem);line-height:1.24;margin:0;color:var(--pine-text);max-width:none;
+  }
+  .panel .tag{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass-bright);display:block;margin-bottom:14px;font-style:normal;
+  }
+
+  /* ---- inset quote pairs (internal vs member-facing) ---- */
+  blockquote{
+    margin:0 0 16px;padding:14px 0 14px 20px;border-left:2px solid var(--brass);
+    color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:1.12rem;line-height:1.4;
+    max-width:38rem;
+  }
+  blockquote em{color:var(--ink-soft)}
+
+  /* ---- tables ---- */
+  .tbl-wrap{overflow-x:auto;margin:26px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line-strong)}
+  table{border-collapse:collapse;width:100%;font-size:.96rem}
+  th{
+    font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--brass);text-align:left;
+    padding:12px 18px 12px 0;vertical-align:bottom;border-bottom:1px solid var(--line-strong);
+  }
+  td{
+    padding:14px 18px 14px 0;vertical-align:top;border-bottom:1px solid var(--line);
+    line-height:1.42;color:var(--ink);
+  }
+  td:first-child,th:first-child{padding-left:0}
+  table.two td:first-child{width:44%;color:var(--ink-soft);padding-right:26px;border-right:1px solid var(--line)}
+  table.two td:last-child{padding-left:26px}
+  .modes td:first-child{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--brass);width:30%;white-space:nowrap;
+  }
+  .modes em{color:var(--ink-soft);font-family:"Newsreader",Georgia,serif;font-size:1.02rem}
+
+  /* ---- thesis compare cards ---- */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:26px 0;background:var(--line);border:1px solid var(--line)}
+  .compare>div{background:var(--surface);padding:22px}
+  .compare h5{
+    font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;margin:0 0 14px;color:var(--ink-soft);
+  }
+  .compare .weak h5{color:var(--ink-soft)}
+  .compare .strong h5{color:var(--brass)}
+  .compare ul li{font-size:.95rem}
+  .compare p{font-size:.98rem;max-width:none}
+  .compare p:last-child{margin-bottom:0}
+
+  /* ---- command list ---- */
+  .cmds{display:flex;flex-direction:column;gap:10px;margin:20px 0}
+  .cmd{
+    display:flex;gap:14px;align-items:flex-start;justify-content:space-between;
+    background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);
+    padding:13px 14px 13px 16px;border-radius:1px;
+  }
+  .cmd code{
+    font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.5;color:var(--ink);
+    white-space:normal;
+  }
+  .copy{
+    flex:none;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    background:transparent;border:1px solid var(--line-strong);color:var(--ink-soft);
+    border-radius:2px;padding:5px 8px;cursor:pointer;line-height:1;
+  }
+  .copy:hover{color:var(--ink);border-color:var(--brass)}
+  .copy:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .copy.done{color:var(--brass);border-color:var(--brass)}
+  .cat{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--brass);margin:26px 0 10px;
+  }
+
+  /* ---- quick start blocks ---- */
+  .qs{margin:24px 0}
+  .qs .qs-h{
+    font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--brass);border-bottom:1px solid var(--line-strong);padding-bottom:8px;margin-bottom:14px;
+  }
+
+  .footnote{
+    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);text-align:center;padding:40px 0 8px;
+  }
+
+  @media (max-width:640px){
+    body{font-size:16px}
+    .toc{grid-template-columns:1fr}
+    .compare{grid-template-columns:1fr}
+    table.two td:first-child{width:auto}
+  }
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  html{scroll-behavior:smooth}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="mark">E3&nbsp;<b>Compass</b></span>
+    <button class="toggle" id="themeBtn" type="button" aria-label="Switch light or dark theme">Theme</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="cover">
+    <svg class="compass" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="var(--brass)" stroke-width="1.4"/>
+      <circle cx="50" cy="50" r="35" stroke="var(--line-strong)" stroke-width="1"/>
+      <g stroke="var(--brass)" stroke-width="1.2">
+        <line x1="50" y1="4" x2="50" y2="14"/><line x1="50" y1="86" x2="50" y2="96"/>
+        <line x1="4" y1="50" x2="14" y2="50"/><line x1="86" y1="50" x2="96" y2="50"/>
+      </g>
+      <path d="M50 16 L58 50 L50 84 L42 50 Z" fill="var(--pine)" stroke="var(--brass)" stroke-width="1"/>
+      <path d="M50 16 L58 50 L50 50 Z" fill="var(--brass)"/>
+      <circle cx="50" cy="50" r="3.4" fill="var(--paper)" stroke="var(--brass)" stroke-width="1.2"/>
+    </svg>
+    <p class="eyebrow">E3 Compass · Lead Operating Partner</p>
+    <h1 class="title">Operating<br>Playbook</h1>
+    <p class="subtitle">How E3 Lead Operating Partners use Compass to focus management on the priorities that create enterprise value.</p>
+    <p class="lede">A practical guide, not a manual. Read it once in about half an hour, then keep it close for the pre-meeting brief, the post-meeting analysis, and the questions worth asking.</p>
+    <div class="meta">
+      <span>Internal · E3</span><span>For Lead Operating Partners</span><span>20–30 min read</span>
+    </div>
+  </section>
+
+  <nav class="contents" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol class="toc">
+      <li><a href="#p1"><span class="n">01</span><span class="t">What Compass Is</span></a></li>
+      <li><a href="#p2"><span class="n">02</span><span class="t">The LOP's Job</span></a></li>
+      <li><a href="#p3"><span class="n">03</span><span class="t">The Core Compass Loop</span></a></li>
+      <li><a href="#p4"><span class="n">04</span><span class="t">The Value Creation Thesis</span></a></li>
+      <li><a href="#p5"><span class="n">05</span><span class="t">Before a Meeting</span></a></li>
+      <li><a href="#p6"><span class="n">06</span><span class="t">During a Meeting</span></a></li>
+      <li><a href="#p7"><span class="n">07</span><span class="t">After a Meeting</span></a></li>
+      <li><a href="#p8"><span class="n">08</span><span class="t">Asking Good Questions</span></a></li>
+      <li><a href="#p9"><span class="n">09</span><span class="t">How Compass Uses E3 Knowledge</span></a></li>
+      <li><a href="#p10"><span class="n">10</span><span class="t">Using E3 Plays</span></a></li>
+      <li><a href="#p11"><span class="n">11</span><span class="t">Foundational to Advanced</span></a></li>
+      <li><a href="#p12"><span class="n">12</span><span class="t">What Compass Produces</span></a></li>
+      <li><a href="#p13"><span class="n">13</span><span class="t">Internal vs. Member-Facing</span></a></li>
+      <li><a href="#p14"><span class="n">14</span><span class="t">How Not to Use Compass</span></a></li>
+      <li><a href="#p15"><span class="n">15</span><span class="t">The Best LOP + Compass Relationship</span></a></li>
+      <li><a href="#p16"><span class="n">16</span><span class="t">Quick Start</span></a></li>
+      <li><a href="#p17"><span class="n">17</span><span class="t">Compass Commands</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section class="part" id="p1">
+      <div class="part-head">
+        <p class="part-num">Part 01</p>
+        <h2 class="part-title">What Compass Is</h2>
+      </div>
+      <p>Compass is E3's operating intelligence system. It exists to help you answer one question, at any point in an engagement:</p>
+      <p><strong>What should I be focused on right now to help this company materially increase enterprise value?</strong></p>
+      <p>Compass brings four things together and keeps them in one place over the life of the engagement.</p>
+      <h4>E3 Knowledge</h4>
+      <p>What E3 has learned about building more valuable businesses — the Plays, the Tools, the patterns that show up again and again across Member companies.</p>
+      <h4>Member Intelligence</h4>
+      <p>What we know about this specific company: its economics, its people, its history, its constraints, and the Value Creation Thesis we are operating against.</p>
+      <h4>LOP Judgment</h4>
+      <p>What you are seeing, questioning, and learning. Your observations, your open hypotheses, the things that don't yet add up.</p>
+      <h4>Continuous Evidence</h4>
+      <p>Meetings, financials, strategic plans, board materials, decisions, and commitments — captured as they happen, not reconstructed from memory.</p>
+      <p>Compass runs through Claude and draws on the E3 Google Drive knowledge architecture. You do not need to know how that plumbing works to use it well. What matters is what it does for you: it helps you remember more than any person can hold in their head, connect a comment from three meetings ago to a number in this month's financials, challenge management's framing, prioritize the few things that matter, prepare properly in ten minutes, recognize patterns across time, resist the pull of the most recent conversation, and reach the relevant E3 knowledge without hunting for it.</p>
+      <p>Compass does not replace your judgment. It sharpens it.</p>
+      <div class="panel"><span class="tag">The rule</span><p>Compass should make a good LOP sharper. It should not turn the LOP into a passenger.</p></div>
+    </section>
+
+    <section class="part" id="p2">
+      <div class="part-head">
+        <p class="part-num">Part 02</p>
+        <h2 class="part-title">The LOP's Job</h2>
+      </div>
+      <p>Understand the role before the system. Your job is to help the Principal and the management team identify and execute the few things that will create the most enterprise value. Not the most improvements. The most value.</p>
+      <p>A strong LOP develops a real point of view, challenges management, separates symptoms from root causes, facilitates decisions the team keeps avoiding, holds people accountable to what they committed to, strengthens management's own capability, brings expertise when the situation demands it, forces honest tradeoffs, protects scarce management attention, and keeps every conversation tied back to enterprise value.</p>
+      <p>A strong LOP does none of the following. You do not become an operating executive. You do not solve every problem put in front of you. You do not take ownership of management's deliverables. You do not build bureaucracy. You do not simply run management's agenda back to them. You do not reach for an E3 tool because it exists. And you do not let Compass do your thinking.</p>
+      <h3>The eight LOP modes</h3>
+      <p>You move between these constantly. Naming them helps you notice which one a moment calls for.</p>
+      <div class="tbl-wrap">
+        <table class="modes">
+          <thead><tr><th>Mode</th><th>In the room</th></tr></thead>
+          <tbody>
+            <tr><td>Challenge</td><td><em>"You're assuming the pipeline problem is top-of-funnel. What if it's qualification?"</em></td></tr>
+            <tr><td>Diagnose</td><td><em>"Margin's down three quarters running. Before we talk price, let's separate mix, discounting, and input cost."</em></td></tr>
+            <tr><td>Facilitate</td><td><em>"We've discussed the second facility in four meetings. Let's decide today or take it off the table."</em></td></tr>
+            <tr><td>Hold accountable</td><td><em>"Last month you owned getting the compensation plan to the board. Where is it?"</em></td></tr>
+            <tr><td>Govern</td><td><em>"This is a board decision, not a management one. Let's get it on the agenda properly."</em></td></tr>
+            <tr><td>Bring expertise</td><td><em>"I've seen three of these integrations. Here's where they usually break."</em></td></tr>
+            <tr><td>Monitor</td><td><em>"The new hire is finding their feet. Let's give it a quarter before we judge it."</em></td></tr>
+            <tr><td>Stay out</td><td><em>"This is an operating call the CEO owns. My involvement would only slow it down."</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The best LOPs are as good at <em>stay out</em> and <em>monitor</em> as they are at <em>challenge</em>. Restraint is part of the job.</p>
+    </section>
+
+    <section class="part" id="p3">
+      <div class="part-head">
+        <p class="part-num">Part 03</p>
+        <h2 class="part-title">The Core Compass Loop</h2>
+      </div>
+      <p>Compass supports one repeating loop:</p>
+      <div class="panel"><p style="font-style:normal;font-size:clamp(1.05rem,3.2vw,1.4rem);letter-spacing:.02em">Listen → Synthesize → Prioritize → Challenge → Commit → Learn</p></div>
+      <h4>Listen</h4>
+      <p>Gather real evidence — from meetings, financials, the people in the room, and actual performance. Not impressions. Evidence.</p>
+      <h4>Synthesize</h4>
+      <p>Connect what you just heard to what you already know. Does it confirm the thesis, complicate it, or contradict it?</p>
+      <h4>Prioritize</h4>
+      <p>Decide whether the new evidence changes the Value Creation Thesis or the priorities. Usually it doesn't. Sometimes it does, and that's the whole point of paying attention.</p>
+      <h4>Challenge</h4>
+      <p>Ask the questions management isn't asking itself — about the framing, the assumptions, the thing everyone has quietly agreed not to raise.</p>
+      <h4>Commit</h4>
+      <p>Drive to clear decisions. Owner, action, date. A conversation that ends without a decision usually needed to end with one.</p>
+      <h4>Learn</h4>
+      <p>Update Compass so the next decision starts from everything E3 now knows, not from a blank page.</p>
+      <p>The loop is not a ceremony. Most weeks you run it in your head in the margins of a single meeting. Compass makes the <em>listen</em>, <em>synthesize</em>, and <em>learn</em> steps reliable instead of dependent on memory.</p>
+    </section>
+
+    <section class="part" id="p4">
+      <div class="part-head">
+        <p class="part-num">Part 04</p>
+        <h2 class="part-title">The Value Creation Thesis</h2>
+      </div>
+      <p>The Current Value Creation Thesis sits at the center of Compass. Everything else orbits it. At any moment you should have a working answer to five questions:</p>
+      <ol>
+        <li>Where can meaningful enterprise value be created?</li>
+        <li>What is preventing that value from being created?</li>
+        <li>What capabilities does the company need to build?</li>
+        <li>What are the top three to five strategic priorities?</li>
+        <li>What should management <em>not</em> work on right now?</li>
+      </ol>
+      <p>The thesis is dynamic, evidence-based, concise, and strategic. It is not a to-do list, and it is not a list of initiatives. It is an argument about where value comes from and what stands in the way.</p>
+      <div class="compare">
+        <div class="weak">
+          <h5>Weak — a list of activity</h5>
+          <ul>
+            <li>Implement CRM</li><li>Hire VP Sales</li><li>Create a board</li>
+            <li>Improve reporting</li><li>Review compensation</li>
+          </ul>
+          <p>Tells you what someone plans to do. Says nothing about why it matters, what it's worth, or what happens if it slips.</p>
+        </div>
+        <div class="strong">
+          <h5>Strong — an argument</h5>
+          <p>The company has strong market demand but cannot convert growth into proportional EBITDA, because sales discipline, pricing, and management capacity have not scaled with revenue.</p>
+          <p>The next phase depends on three things: improving incremental margins, reducing CEO dependency, and building a repeatable commercial operating system.</p>
+        </div>
+      </div>
+      <p>The second version is better because it explains <em>why</em> value isn't compounding and <em>what</em> would change that. The CRM, the VP of Sales, the reporting — those are now candidate means to an end, and each one has to earn its place against the argument. A thesis you can argue with is a thesis you can manage against. A list is just a list.</p>
+    </section>
+
+    <section class="part" id="p5">
+      <div class="part-head">
+        <p class="part-num">Part 05</p>
+        <h2 class="part-title">Before a Meeting</h2>
+      </div>
+      <p>Ten minutes, done well, changes the meeting.</p>
+      <h3>Step 1 — Ask Compass for the current view</h3>
+      <div class="cmds"><div class="cmd"><code>Prepare me for tomorrow's Member meeting. Review the current Value Creation Thesis, open decisions and commitments, my LOP observations, and the most recent relevant meetings. Tell me what I should be focused on.</code><button class="copy" type="button">Copy</button></div></div>
+      <p>Compass should come back with the current thesis, the top priorities, what has changed since you last looked, the commitments at risk, the decisions that need making, the questions worth pushing, and the rabbit holes to avoid.</p>
+      <h3>Step 2 — Challenge Compass</h3>
+      <p>Do not accept the brief as gospel. Push on it the way you'd push on management:</p>
+      <ul>
+        <li><em>"What might we be getting wrong?"</em></li>
+        <li><em>"What evidence does not fit the current thesis?"</em></li>
+        <li><em>"What has management discussed repeatedly without resolving?"</em></li>
+        <li><em>"What are we overreacting to?"</em></li>
+        <li><em>"What are we underreacting to?"</em></li>
+      </ul>
+      <p>The point is to arrive with a sharper view than the one Compass handed you.</p>
+      <h3>Step 3 — Decide the meeting objective</h3>
+      <p>Before you walk in, answer one question:</p>
+      <blockquote>If this meeting goes well, what will be different by the end of it?</blockquote>
+      <p>Usually one to three outcomes. A decision made, a commitment secured, an assumption tested. Write them down. A meeting without an objective becomes a status update, and status updates rarely create value.</p>
+    </section>
+
+    <section class="part" id="p6">
+      <div class="part-head">
+        <p class="part-num">Part 06</p>
+        <h2 class="part-title">During a Meeting</h2>
+      </div>
+      <p>Compass gets you to the meeting prepared. In the meeting, be present. The LOP staring at a screen while the CEO talks is not listening, and the value is in the listening.</p>
+      <p>During the conversation, listen for the things that move a thesis: new evidence, contradictions, issues that keep resurfacing, decisions being avoided, assumptions quietly changing, how leaders behave under pressure, where resources are actually constrained, new commitments being made, shifts in the economics, and — most of all — problems being treated as symptoms when they're causes.</p>
+      <p>Much of the skill is translation. Management describes a solution; you hear the underlying question.</p>
+      <div class="tbl-wrap">
+        <table class="two">
+          <thead><tr><th>Management says</th><th>The LOP should hear</th></tr></thead>
+          <tbody>
+            <tr><td>"We need more salespeople."</td><td>Is capacity actually the constraint, or is it pricing, conversion, positioning, or management?</td></tr>
+            <tr><td>"We want to do acquisitions."</td><td>Does this organization have the management capacity and systems to absorb one?</td></tr>
+            <tr><td>"The team is stretched thin."</td><td>Is this a resourcing problem or a prioritization problem?</td></tr>
+            <tr><td>"Our customers are very price-sensitive."</td><td>Is that the market, or is it how we sell and position value?</td></tr>
+            <tr><td>"We'll fix it once we hire a CFO."</td><td>What decision is being deferred until a hire that may be six months away?</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>You don't have to voice the translation in the room. But you should register it, and Compass should have it after the meeting.</p>
+    </section>
+
+    <section class="part" id="p7">
+      <div class="part-head">
+        <p class="part-num">Part 07</p>
+        <h2 class="part-title">After a Meeting</h2>
+      </div>
+      <p>Fifteen minutes while it's fresh. This is where Compass earns its keep.</p>
+      <ol>
+        <li><strong>Add the evidence.</strong> Drop in the Granola notes. Preserve the source — the record of what was actually said matters more than your reconstruction of it.</li>
+        <li><strong>Ask Compass to analyze, not summarize.</strong> A summary tells you what happened. You were there. What you need is what changed.</li>
+      </ol>
+      <div class="cmds"><div class="cmd"><code>Analyze this meeting against the existing Company Context, Value Creation Thesis, Open Decisions and Commitments, and LOP Observations. Tell me what actually changed.</code><button class="copy" type="button">Copy</button></div></div>
+      <ol start="3">
+        <li><strong>Capture what surfaced.</strong> New facts, your observations, management's claims, open hypotheses, decisions taken, commitments made, contradictions with earlier evidence, weak signals, and possible root causes. Keep management's claims and your hypotheses clearly separate — one is what they told you, the other is what you suspect.</li>
+        <li><strong>Update only what matters.</strong> Do not touch the Value Creation Thesis after every meeting. Most meetings add evidence without changing the argument. Change it only when the evidence genuinely warrants it. A thesis that moves every week isn't a thesis.</li>
+        <li><strong>Close the loop.</strong> Who owns what? By when? How will we know it happened? What will we revisit, and when? Anything that can't survive those four questions wasn't really a commitment.</li>
+      </ol>
+    </section>
+
+    <section class="part" id="p8">
+      <div class="part-head">
+        <p class="part-num">Part 08</p>
+        <h2 class="part-title">Asking Good Questions</h2>
+      </div>
+      <p>Compass gets dramatically better when you ask it to think rather than retrieve. Weak prompts pull facts. Strong prompts pull judgment.</p>
+      <div class="tbl-wrap">
+        <table class="two">
+          <thead><tr><th>Weak</th><th>Strong</th></tr></thead>
+          <tbody>
+            <tr><td>"Summarize the meeting."</td><td>"What changed in our understanding of the business because of this meeting?"</td></tr>
+            <tr><td>"What should we do about sales?"</td><td>"Based on the last six meetings and current financials, what evidence suggests our sales problem is capacity versus effectiveness versus pricing versus market?"</td></tr>
+            <tr><td>"What does E3 say about CFOs?"</td><td>"Given what we know about this company's next three years, what capabilities must the CFO have that the current role may not?"</td></tr>
+            <tr><td>"What are our priorities?"</td><td>"If we could make meaningful progress on only three things over the next 12 months, which would create the most enterprise value, and why?"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Fifteen prompts worth keeping, across the areas you'll actually work. Treat them as starting points — the best prompt is usually the one you write in your own words after reading the brief.</p>
+
+      <p class="cat">Strategic priorities</p>
+      <div class="cmds">
+        <div class="cmd"><code>What are the three biggest constraints on enterprise value in this company right now?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Which current priority has the weakest evidence behind it?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">People</p>
+      <div class="cmds">
+        <div class="cmd"><code>Where is the founder still creating unnecessary dependency, and what would it take to remove it?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Which roles will the three-year plan outgrow before the plan is done?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Finance</p>
+      <div class="cmds">
+        <div class="cmd"><code>Growth is strong but EBITDA isn't following. Walk me through where the operating leverage is leaking.</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Growth</p>
+      <div class="cmds">
+        <div class="cmd"><code>Is our growth problem demand, conversion, retention, or pricing? Show me the evidence for each.</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Operations</p>
+      <div class="cmds">
+        <div class="cmd"><code>What are we treating as a root cause that the evidence suggests is actually a symptom?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">M&amp;A</p>
+      <div class="cmds">
+        <div class="cmd"><code>Does this company have the management capacity and integration capability to make acquisitions accretive, or would deals stretch a team that's already thin?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Governance</p>
+      <div class="cmds">
+        <div class="cmd"><code>Which decisions is management making that the board should own, and which is the board slowing down that management should own?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">AI</p>
+      <div class="cmds">
+        <div class="cmd"><code>Where would AI change the economics of a workflow here, and where would it just be activity? Tie each answer to a cost or revenue outcome.</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Meeting preparation</p>
+      <div class="cmds">
+        <div class="cmd"><code>Prepare my LOP brief for tomorrow: thesis, priorities, what changed, commitments at risk, decisions needed, and what I should push on.</code><button class="copy" type="button">Copy</button></div>
+      </div>
+      <p class="cat">Contradiction detection</p>
+      <div class="cmds">
+        <div class="cmd"><code>What contradictions do you see across our last several meetings — places where management's story has shifted or where claims don't reconcile with the numbers?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What has management repeatedly committed to and not delivered?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What are we overreacting to, and what are we underreacting to?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+    </section>
+
+    <section class="part" id="p9">
+      <div class="part-head">
+        <p class="part-num">Part 09</p>
+        <h2 class="part-title">How Compass Uses E3 Knowledge</h2>
+      </div>
+      <p>The full E3 knowledge base sits behind Compass. You do not browse it. You do not need to know which module a given idea lives in. When a problem shows up, Compass pulls the relevant E3 knowledge to it.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>The problem</th><th>What Compass draws on</th></tr></thead>
+          <tbody>
+            <tr><td>Founder bottleneck</td><td>People &amp; Organizational Capability · Governance · Management Systems · Compensation</td></tr>
+            <tr><td>Margin erosion</td><td>Strategic Finance · Pricing · Operations · Procurement · Go-to-Market</td></tr>
+            <tr><td>Acquisition question</td><td>Capital Allocation · M&amp;A · People · Management Systems · Integration</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The rule is simple and it matters:</p>
+      <div class="panel"><span class="tag">The rule</span><p>The business problem determines the knowledge required. The module structure never dictates the engagement.</p></div>
+      <p>You start from the company's problem, not from E3's table of contents.</p>
+    </section>
+
+    <section class="part" id="p10">
+      <div class="part-head">
+        <p class="part-num">Part 10</p>
+        <h2 class="part-title">Using E3 Plays</h2>
+      </div>
+      <p>A Play is a repeatable E3 intervention built to solve a common value creation problem. The library includes, among others: Founder Decision Rights Reset, Leadership Capability Assessment, KPI Architecture, Strategic Priority Reset, Board Creation, CFO Upgrade, Working Capital Sprint, Pricing Diagnostic, Capital Allocation Framework, Acquisition Thesis, and AI Workflow Assessment.</p>
+      <p>A Play is a tool, not an answer. Reaching for one before you've diagnosed the problem is how good LOPs waste a Member's time. Before running any Play, you and Compass should be able to answer six questions:</p>
+      <ol>
+        <li>What problem are we actually trying to solve?</li>
+        <li>What evidence supports that diagnosis?</li>
+        <li>Is there a more fundamental issue underneath this one?</li>
+        <li>Is management ready to do the work?</li>
+        <li>Who should own it?</li>
+        <li>How will we know it worked?</li>
+      </ol>
+      <p>If those answers are thin, the Play is premature.</p>
+      <div class="panel"><span class="tag">The rule</span><p>Diagnose before prescribing.</p></div>
+    </section>
+
+    <section class="part" id="p11">
+      <div class="part-head">
+        <p class="part-num">Part 11</p>
+        <h2 class="part-title">Foundational to Advanced</h2>
+      </div>
+      <p>Compass tags E3 knowledge by level — foundational, intermediate, advanced — so it can sequence recommendations sensibly. This runs behind the scenes. You do not need to think in levels, and Compass is not a curriculum to work through. What it prevents is prescribing sophistication onto a foundation that can't hold it.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Before this</th><th>These should already be true</th></tr></thead>
+          <tbody>
+            <tr><td>Sophisticated compensation design</td><td>Roles are clear · accountability works · priorities are set · performance is measurable</td></tr>
+            <tr><td>Aggressive M&amp;A</td><td>Management capacity exists · integration capability is credible · capital allocation discipline is in place</td></tr>
+            <tr><td>Advanced AI implementation</td><td>Workflows are understood · data and ownership are clear · the economic outcome is defined</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When Compass steers you toward the more basic move first, that's the sequencing logic working — not caution for its own sake.</p>
+    </section>
+
+    <section class="part" id="p12">
+      <div class="part-head">
+        <p class="part-num">Part 12</p>
+        <h2 class="part-title">What Compass Produces</h2>
+      </div>
+      <p>Compass produces a small set of outputs. Two are internal to E3. Three are shareable with the Member. Know the difference before anything leaves the room.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Output</th><th>Audience</th><th>What it carries</th></tr></thead>
+          <tbody>
+            <tr><td>LOP Pre-Meeting Brief</td><td>Internal</td><td>Thesis, priorities, evidence, questions to push, risks, contradictions, commitments at risk, what to press on.</td></tr>
+            <tr><td>Post-Meeting Analysis</td><td>Internal</td><td>What changed, supporting evidence, decisions and commitments, candidate changes to the thesis. Raw hypotheses live here.</td></tr>
+            <tr><td>Member Value Creation Update</td><td>Shareable</td><td>Current priorities, why they matter, owners, decisions, commitments, next milestones. No raw internal hypotheses.</td></tr>
+            <tr><td>Value Creation Scorecard</td><td>Shareable where appropriate</td><td>Per priority: the EV driver, the owner, the status, the next milestone. One page, not a report.</td></tr>
+            <tr><td>Quarterly Value Creation Review</td><td>Shareable</td><td>A step back. Are we creating value? Are the priorities still right? What changed? What should we stop? What's next?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="p13">
+      <div class="part-head">
+        <p class="part-num">Part 13</p>
+        <h2 class="part-title">Internal vs. Member-Facing</h2>
+      </div>
+      <p>This distinction protects the relationship. Get it wrong and you either lose the Member's trust or lose your own candor. Internal analysis is direct because it has to be. Member-facing output says the same true thing, framed as a path forward.</p>
+      <div class="compare">
+        <div class="weak">
+          <h5>Internal</h5>
+          <blockquote>CEO dependency remains a meaningful constraint.</blockquote>
+          <blockquote style="margin-bottom:0">The CFO may lack the capabilities required for the next stage.</blockquote>
+        </div>
+        <div class="strong">
+          <h5>Member-facing</h5>
+          <blockquote>Continue moving recurring operating decisions into the leadership team so the CEO can focus on the highest-value priorities.</blockquote>
+          <blockquote style="margin-bottom:0">Strengthen forward-looking finance capability as the business scales.</blockquote>
+        </div>
+      </div>
+      <p>Member-facing output stays candid — you are not there to flatter — but it is constructive. It tells people what to do, not just what's wrong.</p>
+      <p><strong>Never forward raw Compass analysis to a Member.</strong> Internal thinking is internal. Translate it, then share it.</p>
+    </section>
+
+    <section class="part" id="p14">
+      <div class="part-head">
+        <p class="part-num">Part 14</p>
+        <h2 class="part-title">How Not to Use Compass</h2>
+      </div>
+      <p>The failure modes are predictable. Watch for these in yourself.</p>
+      <div class="tbl-wrap">
+        <table class="two">
+          <thead><tr><th>Failure mode</th><th>The correction</th></tr></thead>
+          <tbody>
+            <tr><td>Summarizing instead of thinking — Compass becomes a note-taker and the analysis never happens.</td><td>Ask what changed, not what was said.</td></tr>
+            <tr><td>Letting recency drive priorities — the newest problem becomes the most important one.</td><td>Test every "urgent" issue against the thesis before you promote it.</td></tr>
+            <tr><td>Overloading the Member — every problem becomes a strategic priority.</td><td>Protect the top three to five. Everything else waits.</td></tr>
+            <tr><td>Prescribing too quickly — reaching for a Play before diagnosis.</td><td>Diagnose first. The Play, if any, comes after.</td></tr>
+            <tr><td>Treating Compass as fact — a hypothesis accepted without validation.</td><td>Compass proposes. You verify.</td></tr>
+            <tr><td>Becoming dependent — you stop forming your own view.</td><td>Arrive with a point of view Compass didn't give you.</td></tr>
+            <tr><td>Confusing activity with value — a lot gets done; EV doesn't move.</td><td>Tie every priority to an EV driver, or drop it.</td></tr>
+            <tr><td>Becoming management — you start owning execution.</td><td>Strengthen the team's capability. Don't replace it.</td></tr>
+            <tr><td>Turning E3 into bureaucracy — too many templates and standing meetings.</td><td>Keep only the process that changes decisions.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="part" id="p15">
+      <div class="part-head">
+        <p class="part-num">Part 15</p>
+        <h2 class="part-title">The Best LOP + Compass Relationship</h2>
+      </div>
+      <p>The division of labor is clean once you see it.</p>
+      <div class="compare">
+        <div class="strong">
+          <h5>Compass</h5>
+          <ul>
+            <li>Remembers more than you can</li><li>Connects information across time</li>
+            <li>Surfaces patterns</li><li>Challenges assumptions</li>
+            <li>Brings E3 knowledge forward</li><li>Prepares your questions</li>
+            <li>Exposes contradictions</li><li>Preserves organizational memory</li>
+          </ul>
+        </div>
+        <div class="weak">
+          <h5>The LOP</h5>
+          <ul>
+            <li>Knows the people</li><li>Reads the room</li>
+            <li>Exercises judgment</li><li>Builds the trust</li>
+            <li>Decides when to push</li><li>Understands the nuance</li>
+            <li>Forces the tradeoffs</li><li>Develops conviction · guides the Member</li>
+          </ul>
+        </div>
+      </div>
+      <p>Neither half does the other's job well.</p>
+      <div class="panel"><span class="tag">The rule</span><p>Compass provides the map. The LOP still drives.</p></div>
+    </section>
+
+    <section class="part" id="p16">
+      <div class="part-head">
+        <p class="part-num">Part 16</p>
+        <h2 class="part-title">Quick Start</h2>
+      </div>
+      <div class="qs">
+        <div class="qs-h">Before your first Member meeting</div>
+        <ol>
+          <li>Review the Company Context.</li>
+          <li>Review the available strategic and financial materials.</li>
+          <li>Ask Compass for an initial Value Creation Thesis.</li>
+          <li>Separate what is known from what is assumed.</li>
+          <li>Prepare the five to eight questions that will most improve your understanding.</li>
+        </ol>
+      </div>
+      <div class="qs">
+        <div class="qs-h">After every material meeting</div>
+        <ol>
+          <li>Save the Granola notes.</li>
+          <li>Run the Compass meeting analysis.</li>
+          <li>Update the commitments.</li>
+          <li>Add your LOP observations.</li>
+          <li>Update the thesis only if the evidence warrants it.</li>
+        </ol>
+      </div>
+      <div class="qs">
+        <div class="qs-h">Before every LOP meeting — ask Compass</div>
+        <ul>
+          <li><em>"What are the three things I should care most about today?"</em></li>
+          <li><em>"What evidence should I challenge?"</em></li>
+          <li><em>"What decision should we leave this meeting having made?"</em></li>
+        </ul>
+      </div>
+      <div class="qs">
+        <div class="qs-h">Quarterly — ask</div>
+        <ul>
+          <li><em>"If we started this engagement today, would these still be our top priorities?"</em></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="part" id="p17">
+      <div class="part-head">
+        <p class="part-num">Part 17</p>
+        <h2 class="part-title">Compass Commands</h2>
+      </div>
+      <p>Copy these. Adapt them. They show the shape of a good Compass request more than they form a fixed menu — the pattern is to ask Compass to think alongside you, with the company's problem in front of it and enterprise value as the test.</p>
+      <div class="cmds">
+        <div class="cmd"><code>Prepare my LOP brief for tomorrow.</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What has materially changed in the last 90 days?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What are the three biggest constraints to enterprise value?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Which current priority has the weakest evidence behind it?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What has management repeatedly committed to but failed to complete?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What contradictions do you see across recent meetings?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What issues are we treating as root causes that may actually be symptoms?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What are we spending time on that should probably be deferred?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What should I challenge the CEO on in our next meeting?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What evidence would change our current Value Creation Thesis?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Which E3 Plays are relevant to our current priorities, and why?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>What would an experienced private equity operating partner question about this plan?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Where is the founder still creating unnecessary dependency?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>Which parts of the 3-year plan require capabilities the company does not currently have?</code><button class="copy" type="button">Copy</button></div>
+        <div class="cmd"><code>If we could only accomplish three things this year, what should they be?</code><button class="copy" type="button">Copy</button></div>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="footnote">E3 Compass — LOP Operating Playbook · Internal E3 Document</p>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('themeBtn'), KEY='e3-theme';
+    try{var s=localStorage.getItem(KEY); if(s==='dark'||s==='light') root.setAttribute('data-theme',s);}catch(e){}
+    btn.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme');
+      if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+      var next=cur==='dark'?'light':'dark';
+      root.setAttribute('data-theme',next);
+      try{localStorage.setItem(KEY,next);}catch(e){}
+    });
+
+    document.querySelectorAll('.cmd').forEach(function(row){
+      var b=row.querySelector('.copy'), code=row.querySelector('code');
+      if(!b||!code) return;
+      b.addEventListener('click',function(){
+        var text=code.textContent.trim(), done=function(){var o=b.textContent;b.textContent='Copied';b.classList.add('done');setTimeout(function(){b.textContent=o;b.classList.remove('done');},1400);};
+        var fallback=function(){try{var r=document.createRange();r.selectNodeContents(code);var sel=getSelection();sel.removeAllRanges();sel.addRange(r);}catch(e){}};
+        if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(fallback);}
+        else{fallback();}
+      });
+    });
+  })();
+</script>
