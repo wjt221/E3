@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "echo 'Static E3 Compass preview - no install required'",
+  "buildCommand": "rm -rf dist && mkdir -p dist && cp docs/E3-Compass-LOP-Playbook.html dist/index.html",
+  "outputDirectory": "dist"
+}
