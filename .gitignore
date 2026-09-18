@@ -35,6 +35,10 @@ documents/
 client-data/
 company-data/
 
+# Exception: E3 Compass Field Guides are internal E3 documentation (no client
+# data; working examples are anonymized). Allow their generated PDFs only.
+!docs/field-guides/*.pdf
+
 # Logs — may contain client data
 *.log
 npm-debug.log*
