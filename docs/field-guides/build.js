@@ -26,10 +26,12 @@ const front = raw.slice(0, splitAt);
 const bodyMd = raw.slice(splitAt + 1);
 
 // Pull the italic standfirst (the operating-question subtitle) and intro note from the front matter.
-const subtitleMatch = front.match(/\*Who decides[^*]*\*/);
-const coverSubtitle = subtitleMatch ? subtitleMatch[0].replace(/^\*|\*$/g, '') : '';
-const introMatch = front.match(/\*This guide reflects[^*]*\*/);
-const coverNote = introMatch ? introMatch[0].replace(/^\*|\*$/g, '') : '';
+// Subtitle is the first italic block; the note is the italic block that starts "This guide".
+const italics = front.match(/(?<!\*)\*([^*]+)\*(?!\*)/g) || [];
+const strip = (s) => s.replace(/^\*|\*$/g, '').trim();
+const coverSubtitle = italics.length ? strip(italics[0]) : '';
+const noteBlock = italics.find((s) => /^\*This guide/.test(s));
+const coverNote = noteBlock ? strip(noteBlock) : '';
 
 marked.setOptions({ gfm: true, breaks: false });
 let bodyHtml = marked.parse(bodyMd);
@@ -168,7 +170,7 @@ const html = `<!doctype html>
     <div class="rule"></div>
     <div class="subtitle">${coverSubtitle}</div>
     <div class="note">${coverNote}</div>
-    <div class="metabar"><span>Internal &middot; E3</span><span>Compass Knowledge</span><span>Governance</span></div>
+    <div class="metabar"><span>Internal &middot; E3</span><span>Compass Knowledge</span><span>${MODULE_NAME}</span></div>
     <div class="tagline">Envision &middot; Execute &middot; Expand</div>
   </section>
   <main>

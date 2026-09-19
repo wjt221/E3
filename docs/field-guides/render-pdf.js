@@ -5,8 +5,8 @@
 const path = require('path');
 const { chromium } = require('playwright-core');
 
-const HTML = process.argv[2] || path.join(__dirname, 'E3_Compass_Governance_Field_Guide.html');
-const PDF = process.argv[3] || HTML.replace(/\.html$/, '.pdf');
+const HTML = path.resolve(process.argv[2] || path.join(__dirname, 'E3_Compass_Governance_Field_Guide.html'));
+const PDF = path.resolve(process.argv[3] || HTML.replace(/\.html$/, '.pdf'));
 const FOOTER_LEFT = process.argv[4] || 'E3 Compass · Governance Field Guide';
 const EXEC = process.env.CHROMIUM_PATH || '/opt/pw-browsers/chromium';
 
